@@ -1,0 +1,175 @@
+[[_TOC_]]
+
+# Version History
+
+## 1.11 - Jul 25, 2022
+- For SCORM, player will now call SCORM commit on each page completion. This prevents timeout issues on LMS like Cornerstone.
+- General AICC compatibility improvements when running on Pelesys LMS.
+- Memory management improvements to reduce occurrences of page crashes.
+- Boeing UI - added disclaimer text.
+- Boeing UI - added page footer note.
+
+## 1.10.2 - Sep 14, 2021
+- #11125 
+  Fix copyright message on Boeing loading screen so it no longer displays HTML markup.
+
+## 1.10.1 - Aug 18, 2021
+- #10977 
+  Add support for revision number and revision date through CBT structure and core vendor data.
+
+  Examples (highest priority to lowest):
+  - cbtStructure (js/json/xml)
+    ```
+    {
+      "revisionNumber": "Rev 0",
+      "revisionDate": "August 2021"
+    }
+
+    <revision_number>Rev 0</revision_number>
+    <revision_date>August 2021</revision_date>
+    ```
+  - Core vendor data
+    ```
+    revisionNumber= "Rev 0"
+    revisionDate= "August 2021"
+    ```
+  - config.js
+    ```
+    var playerConfigs = {
+      Interactive_Course_2019: {
+          genericJS: {
+              "revisionNumber": "Rev 0",
+              "revisionDate": "August 2021"
+          }
+      }
+    };
+
+    var playerConfigBase = {
+      "revisionNumber": "Rev 0",
+      "revisionDate": "August 2021"
+    };
+    ```
+
+## 1.10.0 - Jun 29, 2021
+- #10494 
+  New optional properties added to display a revision number and revision date on every page of the CBT.
+![image.png](/.attachments/image-af81f578-cf97-468b-955d-e0f9511d4690.png =300x) 
+
+  The recommended format is the following:  "Rev # MMMM yyyy".
+  Examples: `Rev 1 June 2021` or `Rev 3 September 2021`
+
+  The developer can set the global revision data in the config.js file using the `revisionNumber` and `revisionDate` properties on the `playerConfigBase` object.  Alternatively, the revision data can be set using the same properties under the specific course definition in the `playerConfigs` object, in case multiple courses are available on different revisions.
+
+  Examples:
+  ```
+  var playerConfigBase = {
+    "revisionNumber": "Rev 1",
+    "revisionDate": "June 2021"
+  };
+
+  var playerConfigs = {
+    Interactive_Course_2019: {
+        genericJS: {
+            "revisionNumber": "Rev 1",
+            "revisionDate": "June 2021"
+        }
+    }
+  };
+  ```
+
+
+- #5688 
+  Adjusted the minimum height requirement to 520px to improve usability on a wider range of devices such as Android 1280x800 tablets. Vertical scrollbar will appear if the player height is smaller than 520px. 
+
+## 1.9.0 - May 6, 2021
+- Added "small" (default), "medium" and "large" options to the video modal. The developer can add a new property when calling `pageControllerAPI.showVideo()` as follows:
+
+  ```
+  pageControllerAPI.showVideo({
+    title: "My Video",
+    url: "myvideo.mp4",
+    size: "large"
+  });
+  ```
+- Fixed an issue on the Delta UI - Options button is now shown only if there is at least one options menu item visible.
+- CSD-16782 - fixed an issue where course slides will freeze when switching tabs or application, which would happen while the content is waiting for user interaction.  
+
+  Expectation of user interaction is now inferred, but a developer can explicitly declare whether user input is required or not using the following:
+  ```
+  parent.pageControllerAPI.setWaitingForUserInput(true);
+
+  parent.pageControllerAPI.setWaitingForUserInput(false);
+  ```
+  The first statement would typically be called right after a `stop()` where hotspots are declared, and the second statement would be called right before `completeVision()`.
+
+
+## 1.8.0 - Oct 29, 2020
+- Addressed an issue where HTML5 audio doesn’t initially play when no user interaction has been detected. Audio pre-initialization is now tied to one of two dialogs that are presented to the user when the player is launched:
+  - First-time “exit data-loss” warning, which instructs the user to use the exit button.
+  - “Resume from bookmark” dialog, which confirms which page to load.
+- Fixed a compatibility issue with Delta’s custom UI.
+- Added support for Animate 2020. Content developers can now use the latest version of Adobe Animate to publish HTML5 pages for the CBT Player.
+  - The developer source package now includes copies of the old and new Animate publish templates.
+  - For each old or new Animate page, developers will need to update the page’s publish settings to use the latest "2020" publish template.
+ - Added new Player APIs for registering and triggering custom actions.
+   - From Animate or other HTML page content, the developer can register custom actions. For example:
+
+     ```
+        pageControllerAPI.registerCustomAction("my_custom_event", function() {
+          //Perform some action like jumping to a keyframe or show/hide elements
+        });
+     ```
+   - From audio text, HTML links can be created to trigger the customer actions. For example:
+
+     ```
+        <a onclick="player.triggerCustomAction('my_custom_event')>Click this link to do custom action</a>
+     ```
+
+## 1.7.6
+- Fixed issue where no data is received by the LMS when exiting an AICC course that uses the start.asp as its entry page. (Related to Chrome 80 and sendBeacon compatibility)
+
+## 1.7.4
+- Fixed some rendering issues (missing messages and incorrectly displayed buttons) when running on iOS 13 devices.
+
+## 1.6.0 Internal
+- Local playback - target BA requirements.
+- Must change datasource, glossary, and references to js sources.
+- Don't use this for production!!!
+
+## 1.5.3
+- Removed some incomplete code that got into the last build, which was causing some major script errors to show up. Bad code caused when we moved repositories to DevOps and Git.
+
+## 1.5.2
+- New UI for 2019
+- Fixed title disappears when there are 100 or more pages in the topic
+
+## 1.5.1
+- Added options to use JS for data instead of json. Required for Ethiopian (on Logipad) but this is a general feature.
+- dataSourceType: "js" option added. Must also define a "dataVariable": "[name of var]" so that the player knows what to look for inside the js datasource file. See example in "Interactive_Course_2019"...fairly easy to convert the json to js.
+- glossaryPath - can point to a .js file now. Similar to above, you'll need to convert your glossary.json to the new js type.
+- referencesPath - same as above.
+
+## 1.4.3
+- 3791	Fix handling when suspend data is preceded or ends with "/r/n"
+- 3788	As a content developer, I want the "content protection" disabled for the developer tool.
+- 3943	As a content developer, I want to see a version in the JSON so that I know which version of the player it was generated from.
+- 3865	Update logo on "Safe to close window" to be Pelesys | CAE.
+
+## 1.4.2
+- Content protection with new config.js property "lmsContentProtection".
+- Performace improvement with new config.js property "_singleFrame".
+- Launch options designer menu tab shows menu items for JSON data source type.
+- Launch options designer launch data tab displays missing core vendor settings.
+- Home page next button does not flash when course is completed.
+- Audio text renders HTML.
+- New getVersion pageController API.
+- Disable auto-play after course completion.
+- Course completion pop-up button options are home and exit.
+- Merged pages topic visited and completed status are updated correctly and topic is clickable.
+- Fixed Chrome white screen issue.
+
+## 1.4.1 - Jun 20, 2018
+- UI skin for Delta.
+
+## 1.4.0 
+- Q1 Specialty courses includes auto-commit.
