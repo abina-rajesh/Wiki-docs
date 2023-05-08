@@ -1,0 +1,32 @@
+1) navigate to production database you want to make a backup of
+2) In overview tab of database, click on copy
+
+**Copy Properties**
+|  **Property** | **Value** | |
+| ------ | ------ | ------ |
+| Database Name | Give it a unique name |
+| Server | Create New Server |
+| | **Server Properties** |
+| | Server Name | Give it a unique name |
+| | Location | Same as source database |
+| | Authentication | Use SQL Authentication |
+| | Server Admin Login | dbadm |
+| | Password | Any password. Need to hand over to Devs |
+| Want to Use SQL elastic Pool? | No |
+| Compute + Storage |
+| | Compute Tier | Serverless |
+| | Compute Hardware | Max vCores = 4 |
+
+3) Click OK -> Review + Create -> Create
+4) Once the resources have been created navigate to the resource group of newly created SQL Server and Database
+5) In overview tab, check boxes next to SQL Server and Database and click on Move -> To another subscription
+
+| Subscription | ETR-Dev |
+| -- | -- |
+| Resource Group | Dev-WE |
+
+6) Click Next -> Wait for validation
+7) Next -> Check "I understand..." -> Next to begin move
+8) After move is completed, notify devs and provide credentials for SQL Server
+
+
