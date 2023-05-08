@@ -1,0 +1,149 @@
+# TMDS 3.12.2/4.0.3 Scope<br>
+
+All items listed under the following product release:
+#21273
+#22475
+
+
+# Development Phase
+
+::: mermaid
+gantt
+    title Development Timeline
+    dateFormat YYYY-MM-DD
+    axisFormat %b-%e
+
+    Release Testing Begins: milestone, m1, 2023-04-06, 1d
+
+
+    section Feature 22473 - JetStar
+    Development (Hema)               :done, f1, 2023-02-15, 5d
+    Testing on Staging (Anh)         :done, after f1, 1d
+
+    section Feature 22472 - Atlas Air
+    Development (Hema)               :done, f2, 2023-03-01, 5d
+    Testing on Staging (Anh)         :done, after f2, 1d
+
+    section Feature 20941 - General Feature
+    Development (Hema)               :done, f3, 2023-02-06, 30d
+    Testing on Staging (Anh)         :done, after f3, 1d
+
+    section Feature 22470 - eLearning
+    Development (Hema)               :done, f4, 2023-03-15, 5d
+    Testing on Staging (Anh)         :done, after f4, 1d
+
+    section Feature 22468 - CAE Online
+
+    Development (Hema)               :active, f5, 2023-02-02, 2023-03-29
+    Testing on Staging (Anh)         :active, f5, 2023-03-30, 1d
+
+    section Feature 22471 - Provincial Airlines
+    Development (Hema)               :done, f6, 2023-03-15, 2023-03-29
+    Testing on Staging (Anh)         :active, f6, 2023-03-30, 1d
+
+    section Feature 22474 - Volotea
+    Development (Hema)               :done, f7, 2023-03-15, 2023-03-29
+    Testing on Staging (Anh)         :active, f7, 2023-03-30, 1d
+
+    section Feature 22479 - Philippines Airlines
+    Development (Hema)               :done, f8, 22023-03-15, 2023-03-29
+    Testing on Staging (Anh)         :active, f8, 2023-04-06, 1d
+
+    section Feature 22469 - FPT Raised Bugs
+    Development (Hema)               :active, a3, 2023-02-02, 2023-04-06
+    Testing on Staging (Anh)         :active, a4, 2023-04-06, 1d
+
+    section Feature 20942 - Other Bugs
+    Development (Hema)               :active, a3, 2023-02-02, 2023-04-06
+    Testing on Staging (Anh)         :active, a4, 2023-04-06, 1d
+
+
+
+
+    
+:::
+---
+
+# Testing Phase - V3
+
+::: mermaid
+gantt
+    title Release Testing Timeline
+    dateFormat YYYY-MM-DD
+    axisFormat %b-%e
+
+    Ready for Release: milestone, m1, 2023-04-26, 1d
+
+    section Deployment
+    Update Internal Staging Environment (Jacky)    :u1, 2023-04-06, 1d
+    
+    section System Testing
+    Release Testing (Anh)    :u2, 2023-04-06, 2023-04-19
+
+    section Automation Testing
+    Run Automation Tests (Jeff)    :u3, 2023-04-06, 2d
+:::
+
+---
+
+# Release Phase - V3
+
+::: mermaid
+gantt
+    title Release Phase Timeline
+    dateFormat YYYY-MM-DD
+    axisFormat %b-%e
+
+    section Release Notes
+    Publish Release Notes (Robin)    :u1, 2023-04-18, 1d
+
+   section Deployment to Customer Prod Site
+    Deploy 3.12.2 to Staging site update (Chris)    :i1, 2023-04-20, 2023-04-22
+
+    section Deployment to Customer Prod Site
+    Deploy 3.12.2 to CAE online Prod Site (Chris)    :i1, 2023-04-24, 1d
+    Deploy 3.12.2 to Other Customers Prod Site (Chris)    :i1, 2023-05-01, 2023-05-03
+    Send Release Notes to Customers               :i2, 2023-04-27, 1d
+
+:::
+
+---
+# Testing Phase - V4
+
+::: mermaid
+gantt
+    title Release Testing Timeline
+    dateFormat YYYY-MM-DD
+    axisFormat %b-%e
+
+    Ready for Release: milestone, m1, 2023-05-03, 1d
+
+    section Deployment
+    Update Internal Staging Environment (Jacky)    :u1, 2023-04-21, 1d
+    
+    section System Testing
+    Release Testing (Anh)    :u2, 2023-04-24, 2023-04-28
+
+    section Automation Testing
+    Run Automation Tests (Jeff)    :u3, 2023-04-27, 2d
+:::
+
+---
+
+
+# Release Phase - V4
+
+::: mermaid
+gantt
+    title Release Phase Timeline
+    dateFormat YYYY-MM-DD
+    axisFormat %b-%e
+
+    section Release Notes
+    Publish Release Notes (Michael)   :u1, 2023-04-26, 1d
+
+    section Deployment to Customer Staging Site
+    Deploy 4.0.3 to Prod Site (Jacky - R2 branch)    :i1, 2023-05-03, 1d
+    Send Release Notes to Customers               :i2, 2023-04-26, 1d
+
+:::
