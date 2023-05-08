@@ -1,1 +1,35 @@
+[[_TOC_]]
+
+_note: There is a new QMS aims (https://dev.azure.com/pelesysdev/TMDS/_git/INT-AIMS-QMS). There are significant changes made so it would work with the QMS 2.0. In the future, it would be rewrite into a function app instead. For now, we will use the old AIMS setup._
+
+##AIMSWebService
+   * Copy the files to the services folder (D:\ProductionSites\root.airtransat\Services\AIMSWebService). source: 
+   * Create the sub application within the GLX site. The sample url would be https://airtransatglx.pelesys.com/aims
+![image.png](/.attachments/image-a00d4176-6bfe-48f0-86aa-99c21df40ed2.png)
+   * These are the two urls you need to provide to the client
+
+    *https://airtransatglx.pelesys.com/aims/requeststatus
+![image.png](/.attachments/image-262234fc-be59-42fb-a061-47c9c2cf6c12.png)
+
+    *https://airtransatglx.pelesys.com/aims/login.aspx
+
+![image.png](/.attachments/image-77918ff7-a12a-4f16-8533-182249db2014.png)
+
+
+
+##Web.config file
+-  set the username and password to use for logging in mapping table
+-  set the connection string to the GLX database
+
+![image.png](/.attachments/image-88b78d4d-15b0-4c3e-adc5-de70db7e3fdc.png)
+
+##EditMapping.aspx
+Web Application that allow user to map and update AIMS code to QMS code for certificates, then save to QMS.AIMSCodes table.
+
+-  Update AIMS Code to existing QMS certificates
+Enable and disable the useEarliestExpiration, useFurthestExpiration flags
+Search by AIMS code or Certificate name
+e.g. Air Transat https://airtransatglx.pelesys.com/aims/login.aspx
+
+![image.png](/.attachments/image-b0703416-10af-4677-aef0-a55ea8bb6132.png)
 
