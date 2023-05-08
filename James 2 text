@@ -1,0 +1,64 @@
+# 1. Shut off Sites in IIS
+
+# 2. Switch DNS in IIS
+TMS <-> GLX
+
+# 3. Update web.config
+
+## GLX wwwroot web.config
+| Key | Value | Note |
+| - | - | - |
+| EnableHybridLogin| False | |
+| GCReferer | https://galaxybuildtms.pelesys.com | |
+| EventProxyDomainIdentifier | galaxybuild.pelesys.com | only if ETR is enabled |
+
+## GC web.config
+| Key | Value | Note |
+|-|-| - |
+| GCReferer | https://galaxybuildtms.pelesys.com | |
+| EventProxyDomainIdentifier | galaxybuild.pelesys.com | only if ETR is enabled |
+
+## TMS web.config
+| Key | Value |
+|-|-|
+| URLGalaxyRoot | https://galaxybuild.pelesys.com |
+| LMSUrl | https://galaxybuild.pelesys.com/Lms/Files/MyEnrolledCourse.aspx |
+| QMSUrl | https://galaxybuild.pelesys.com/Qms/Files/Certificates.aspx |
+
+Uncomment rewrite rule section. Update Redirect URL
+`<action type="Redirect" url="https://galaxybuild.pelesys.com/lms/CrewpadService.svc" appendQueryString="true" redirectType="Temporary" />`
+
+## LMS-SE web.config
+| Key | Value |
+|-|-|
+| GCReferer | https://galaxybuildtms.pelesys.com |
+
+# 4. Update DB URLs
+Script can be found under **D:\tmp\TMDS_GLX_Migration\Update from Hybrid.sql** of the _Dev_ VM
+
+| Server | Path |
+|-|-|
+| aws-est-dev01 | D:\temp\TMDS_GLX_Migration\update from Hybrid.sql |
+| aws-eu-dev | D:\tmp\TMDS_GLX_Migration\Update From Hybrid.sql |
+| aws-ap-dev01 | D:\temp\TMDS_GLX_Migration\update from Hybrid.sql |
+| aws-ca-stagedb | D:\_temp\TMDS_GLX_Migration\Update From Hybrid.sql |
+
+(If applicable) Update ETR DB, set glxhostname='galaxybuild.pelesys.com'
+
+# 5. Update CrewPad Activation Server
+The CrewPad Activation database can be found under aws-est-sql19m1 database name **crewpadactivation**
+`update cpservers set cpurl = 'https://galaxybuild.pelesys.com/Lms/CrewpadService.svc' where id = 3503`
+
+# 6. Update CrewPad Pro Activation Server
+Open CrewPad Pro activation server website https://crewpadpro.pelesys.com
+Find entry for target website.
+Update TMDS Web URL
+![image.png](/.attachments/image-ec7397d0-6dae-4011-ab36-98974f478391.png)
+
+# 7. Turn on Sites and smoke test
+## Smoke Test
+###Navigate around TMDS pages. GC / EGS / SCH
+###Navigate around GLX applications' main pages (courses, course units, enrollments, certificates etc.)
+###Test file server endpoints in Mobile -> File Server
+![image.png](/.attachments/image-e817c2ed-04a4-4145-a829-a46cc132fae0.png)
+###Test management service by using Enroll Users / Enroll User Groups / Enroll Import. Only need to test one of the methods since they all use the management service.
